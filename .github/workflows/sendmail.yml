@@ -24,6 +24,22 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
+      - name: Get commits
+        uses: actions/github-script@v6.3.1
+        id: changelog
+        env:
+          COMMITS: ${{ toJSON(github.event.commits) }}
+        with:
+          result-encoding: string
+          script: |
+              const commits = JSON.parse(process.env.COMMITS);
+              var lines = "## What’s Changed\n\n";
+              for (const commit of commits) {
+                lines += "- " + commit.message + " (" + commit.id + ") @" + commit.author.username + "\n"
+              }
+              return lines
+          
+
       - name: Send email
         uses: dawidd6/action-send-mail@v3.7.1
         with:
@@ -35,7 +51,7 @@ jobs:
               subject: Github Actions job result
               to: nicolasscorpelini@nasajon.com.br
               from: Luke Skywalker # <user@example.com>
-              body: ${{ github.event.head_commit.message }}
+              body: ${{ steps.changelog.outputs.result }}
               ignore_cert: true
               convert_markdown: true
               priority: low
