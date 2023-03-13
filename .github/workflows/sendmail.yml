@@ -39,20 +39,23 @@ jobs:
               }
               return lines
           
+      - name: Echo commits
+        run: echo ${{ steps.changelog.outputs.result }}
 
-      - name: Send email
-        uses: dawidd6/action-send-mail@v3.7.1
-        with:
-              server_address: ${{secrets.MAIL_CONNECTION}}
-              server_port: 465
-              secure: true
-              username: ${{secrets.MAIL_USERNAME}}
-              password: ${{secrets.MAIL_PASSWORD}}
-              subject: Github Actions job result
-              to: nicolasscorpelini@nasajon.com.br
-              from: Luke Skywalker # <user@example.com>
-              body: ${{ steps.changelog.outputs.result }}
-              ignore_cert: true
-              convert_markdown: true
-              priority: low
+
+#       - name: Send email
+#         uses: dawidd6/action-send-mail@v3.7.1
+#         with:
+#               server_address: ${{secrets.MAIL_CONNECTION}}
+#               server_port: 465
+#               secure: true
+#               username: ${{secrets.MAIL_USERNAME}}
+#               password: ${{secrets.MAIL_PASSWORD}}
+#               subject: Github Actions job result
+#               to: nicolasscorpelini@nasajon.com.br
+#               from: Luke Skywalker # <user@example.com>
+#               body: ${{ steps.changelog.outputs.result }}
+#               ignore_cert: true
+#               convert_markdown: true
+#               priority: low
 
