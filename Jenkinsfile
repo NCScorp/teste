@@ -7,10 +7,7 @@ node('aws-codebuild'){
     stage('Checkout') {
 			
         timeout(time: 3600, unit: 'SECONDS') {
-            checkout scmGit(
-                userRemoteConfigs: [[credentialsId: 'JenkinsCheckoutHTTPS',
-                url: 'https://github.com/NCScorp/teste-maroto.git']]
-            )
+            git credentialsId: 'JenkinsCheckoutHTTPS', url: 'https://github.com/NCScorp/teste'
         }
     }
 
