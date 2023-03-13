@@ -33,7 +33,7 @@ jobs:
           result-encoding: string
           script: |
               const commits = JSON.parse(process.env.COMMITS);
-              var lines = "## What’s Changed\n\n";
+              var lines = "## O que mudou:\n\n";
               for (const commit of commits) {
                 lines += "- " + commit.message + " (" + commit.id + ") @" + commit.author.username + "\n"
               }
@@ -43,19 +43,19 @@ jobs:
         run: echo "${{ steps.changelog.outputs.result }}"
 
 
-#       - name: Send email
-#         uses: dawidd6/action-send-mail@v3.7.1
-#         with:
-#               server_address: ${{secrets.MAIL_CONNECTION}}
-#               server_port: 465
-#               secure: true
-#               username: ${{secrets.MAIL_USERNAME}}
-#               password: ${{secrets.MAIL_PASSWORD}}
-#               subject: Github Actions job result
-#               to: nicolasscorpelini@nasajon.com.br
-#               from: Luke Skywalker # <user@example.com>
-#               body: ${{ steps.changelog.outputs.result }}
-#               ignore_cert: true
-#               convert_markdown: true
-#               priority: low
+      - name: Send email
+        uses: dawidd6/action-send-mail@v3.7.1
+        with:
+              server_address: ${{secrets.MAIL_CONNECTION}}
+              server_port: 465
+              secure: true
+              username: ${{secrets.MAIL_USERNAME}}
+              password: ${{secrets.MAIL_PASSWORD}}
+              subject: Release notes
+              to: nicolasscorpelini@nasajon.com.br
+              from: SRE # <user@example.com>
+              body: ${{ steps.changelog.outputs.result }}
+              ignore_cert: true
+              convert_markdown: true
+              priority: low
 
