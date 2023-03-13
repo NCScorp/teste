@@ -40,7 +40,7 @@ jobs:
               return lines
           
       - name: Echo commits
-        run: echo ${{ steps.changelog.outputs.result }}
+        run: echo "${{ steps.changelog.outputs.result }}"
 
 
 #       - name: Send email
